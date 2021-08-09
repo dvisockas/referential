@@ -1,7 +1,7 @@
 # Referential
 ![example workflow](https://github.com/dvisockas/referential/actions/workflows/main.yml/badge.svg)
 
-Referential lets you convert your ruby methods into procs without sacrificing functionality. Instead of raising `ArgumentError`, it returns back a proc!
+With Referential, you can convert your ruby methods into curried procs for use in composition, or as arguments to other methods, while still being able to call them directly!
 
 ## Installation
 
@@ -21,7 +21,7 @@ Or install it yourself as:
 
 ## Usage
 
-Just extend your class with the `Referential` module and use `ref` keyword:
+Just extend your class with the `Referential` module and use the `ref` keyword:
 
 ```ruby
 class Operations
@@ -37,7 +37,7 @@ class Operations
 end
 ```
 
-This lets you use these methods as procs and use them in a functional manner (using ruby pipeline, mapping by method, etc).
+This lets you use these methods as procs in a functional manner (to compose them, pass them as an argument to `.map`, etc).
 
 Instead of writing:
 
@@ -48,26 +48,39 @@ class Operations
   def square_and_add_two(x)
     add_two(square(x))
   end
+  
+  def added_squares(list)
+    list.map { |x| add_two(square(x)) }
+  end
 ```
 
-You can use the pipeline operator with your methods:
+You can use the composition operator:
 
 ```ruby
 class Operations
   ...
 
   def square_and_add_two(x)
-    (&add_two << square).call(x)
-    # Or you can fo the other way:
-    # x.then(&add_two << square)
+    x.then(&square >> add_two)
+    # Or the other way around:
+    # (&add_two << square).call(x)
+  end
+  
+  def added_squares(list)
+    list.map(&square >> add_two)
   end
 end
 
 Operations.new.square_and_add_two(2)
 # => 6
+
+Operations.new.added_squares([1, 2, 3])
+# => [3, 6, 11]
 ```
 
-You can do this with class methods too using `cref` keyword:
+The original method behaviour is preserved - you can always call `square(x)` directly.
+
+Class methods can also be turned into procs by using the `cref` keyword:
 ```ruby
 module Foo
   extend Referential
@@ -83,7 +96,8 @@ end
 ```
 
 
-You can do this for arguments with more than one argument too. If a method accepts two arguments, and you pass only one, you'll get a curried proc back!:
+Methods with several arguments, if turned into procs, can be called directly by passing the required number of arguments.
+If called with fewer arguments than required, a curried proc is returned instead!:
 ```ruby
 class Operations
   extend Referential
