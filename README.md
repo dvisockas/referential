@@ -37,7 +37,7 @@ class Operations
 end
 ```
 
-This lets you use these methods as procs in a functional manner (to compose them, pass them as an argument to `.map`, etc).
+This lets you use these methods as procs in a functional manner (by composing them, passing them as an argument to `.map`, etc).
 
 Instead of writing:
 
