@@ -12,7 +12,7 @@ module Referential
   private
 
   def redefine!(context, method_name, arity)
-    raise 'Cannot compose methods with splat arguments!' if arity < 0
+    raise 'Cannot compose methods with splat, keyword or default arguments!' if arity < 0
 
     context.alias_method new_name(method_name), method_name
     context.undef_method method_name
