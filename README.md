@@ -1,7 +1,8 @@
 # Referential
 ![example workflow](https://github.com/dvisockas/referential/actions/workflows/main.yml/badge.svg)
 
-With Referential, you can convert your ruby methods into curried procs for use in composition, or as arguments to other methods, while still being able to call them directly!
+Referential overrides default ruby method behaviour of raising `ArgumentError` when not all arguments are passed and returns (curried) procs instead.
+This enables composition, pipelining, or just passing methods procs to other methods, while still being able to call them directly!
 
 ## Installation
 
@@ -48,7 +49,7 @@ class Operations
   def square_and_add_two(x)
     add_two(square(x))
   end
-  
+
   def added_squares(list)
     list.map { |x| add_two(square(x)) }
   end
@@ -65,7 +66,7 @@ class Operations
     # Or the other way around:
     # (&add_two << square).call(x)
   end
-  
+
   def added_squares(list)
     list.map(&square >> add_two)
   end
