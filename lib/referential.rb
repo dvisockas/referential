@@ -1,4 +1,7 @@
 require_relative 'referential/version'
+# require_relative 'referential/core_ext/object'
+# require_relative 'referential/core_ext/symbol'
+require_relative 'referential/core_ext'
 
 module Referential
   def ref(method_name)
@@ -29,7 +32,7 @@ module Referential
 
   def reference_block(new_name, arity)
     proc do |*args|
-      proc { |*args| method(new_name).call(*args) }
+      proc { |*inner_args| method(new_name).call(*inner_args) }
         .curry(arity)
         .call(*args)
     end

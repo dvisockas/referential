@@ -19,6 +19,8 @@ Gem::Specification.new do |spec|
   spec.files = [
     'lib/referential.rb',
     'lib/referential/version.rb',
+    'lib/referential/core_ext.rb',
+    'lib/referential/core_ext/symbol.rb',
   ]
 
   spec.require_paths = ['lib']
