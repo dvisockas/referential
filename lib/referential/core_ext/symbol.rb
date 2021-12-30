@@ -1,9 +1,13 @@
 class Symbol
+  def call(*args)
+    to_proc.call(*args)
+  end
+
   def <<(other)
-    Proc.new(&self) << Proc.new(&other)
+    to_proc << Proc.new(&other)
   end
 
   def >>(other)
-    Proc.new(&self) >> Proc.new(&other)
+    to_proc >> Proc.new(&other)
   end
 end

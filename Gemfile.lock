@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    referential (0.0.2)
+    referential (0.0.3)
 
 GEM
   remote: https://rubygems.org/
@@ -31,4 +31,4 @@ DEPENDENCIES
   rspec (~> 3.0)
 
 BUNDLED WITH
-   2.2.15
+   2.2.22
