@@ -10,12 +10,8 @@ RSpec.describe Symbol do
     let(:output) { %w[a b] }
 
     xcontext 'when composing multiple symbols' do
-      it 'works as if symbols were procs' do
-        expect(input.map(&:strip >> :split >> :last)).to eq(output)
-      end
-
       it 'works with callable and symbol mix' do
-        expect(input.map(&:strip >> Proc.new(&:split) >> :last)).to eq(output)
+        expect(input.map(&:strip).map(&Proc.new(&:split) >> :last)).to eq(output)
       end
     end
   end
