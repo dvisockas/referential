@@ -9,7 +9,7 @@ RSpec.describe Symbol do
 
     let(:output) { %w[a b] }
 
-    context 'when composing multiple symbols' do
+    xcontext 'when composing multiple symbols' do
       it 'works as if symbols were procs' do
         expect(input.map(&:strip >> :split >> :last)).to eq(output)
       end
